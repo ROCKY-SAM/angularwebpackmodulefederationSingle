@@ -3,5 +3,118 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "sampleTwo": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/sample-two",
+      "sourceRoot": "projects/sample-two/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "ngx-build-plus:browser",
+          "options": {
+            "outputPath": "dist/sampleTwo",
+            "index": "projects/sample-two/src/index.html",
+            "main": "projects/sample-two/src/main.ts",
+            "polyfills": "projects/sample-two/src/polyfills.ts",
+            "tsConfig": "projects/sample-two/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/sample-two/src/favicon.ico",
+              "projects/sample-two/src/assets"
+            ],
+            "styles": [
+              "projects/sample-two/src/styles.scss"
+            ],
+            "scripts": [],
+            "extraWebpackConfig": "projects/sample-two/webpack.config.js",
+            "commonChunk": false
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/sample-two/src/environments/environment.ts",
+                  "with": "projects/sample-two/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "extraWebpackConfig": "projects/sample-two/webpack.prod.config.js"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "ngx-build-plus:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "sampleTwo:build:production",
+              "extraWebpackConfig": "projects/sample-two/webpack.prod.config.js"
+            },
+            "development": {
+              "browserTarget": "sampleTwo:build:development"
+            }
+          },
+          "defaultConfiguration": "development",
+          "options": {
+            "extraWebpackConfig": "projects/sample-two/webpack.config.js",
+            "port": 3002
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "sampleTwo:build"
+          }
+        },
+        "test": {
+          "builder": "ngx-build-plus:karma",
+          "options": {
+            "main": "projects/sample-two/src/test.ts",
+            "polyfills": "projects/sample-two/src/polyfills.ts",
+            "tsConfig": "projects/sample-two/tsconfig.spec.json",
+            "karmaConfig": "projects/sample-two/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/sample-two/src/favicon.ico",
+              "projects/sample-two/src/assets"
+            ],
+            "styles": [
+              "projects/sample-two/src/styles.scss"
+            ],
+            "scripts": [],
+            "extraWebpackConfig": "projects/sample-two/webpack.config.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "sampleTwo"
 }
